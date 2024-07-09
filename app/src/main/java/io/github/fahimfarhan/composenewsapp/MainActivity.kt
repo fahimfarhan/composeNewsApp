@@ -17,6 +17,9 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
+
+//    val newsApiKey = BuildConfig.NEWS_API_KEY
+
     setContent {
       ComposeNewsAppTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

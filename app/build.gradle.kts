@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.jetbrains.kotlin.android)
@@ -18,6 +20,10 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
+
+    val properties = Properties()
+    properties.load(project.rootProject.file("local.properties").inputStream())
+    buildConfigField("String", "NEWS_API_KEY", properties.getProperty("NEWS_API_KEY"))
   }
 
   buildTypes {
@@ -35,6 +41,7 @@ android {
   }
   buildFeatures {
     compose = true
+    buildConfig = true
   }
   composeOptions {
     kotlinCompilerExtensionVersion = "1.5.1"
@@ -47,7 +54,12 @@ android {
 }
 
 dependencies {
-
+  // my dependencies
+  // retrofit library
+  api(libs.retrofit)
+  api(libs.retrofit.gson.converter)
+  api(libs.logging.interceptor)
+  // initial dependencies
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
