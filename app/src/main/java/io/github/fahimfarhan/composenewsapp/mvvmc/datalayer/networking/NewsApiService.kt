@@ -1,8 +1,8 @@
-package io.github.fahimfarhan.composenewsapp.mvvmc.networking
+package io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.networking
 
 import io.github.fahimfarhan.composenewsapp.BuildConfig
-import io.github.fahimfarhan.composenewsapp.mvvmc.models.NewsResponse
-import io.github.fahimfarhan.composenewsapp.mvvmc.models.SourceResponse
+import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.NewsResponse
+import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.SourceResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

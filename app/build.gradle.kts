@@ -59,6 +59,10 @@ dependencies {
   api(libs.retrofit)
   api(libs.retrofit.gson.converter)
   api(libs.logging.interceptor)
+  // compose navigation
+  implementation(libs.androidx.navigation.compose)
+  // viewmodel
+  api(libs.androidx.lifecycle.viewmodel.compose)
   // initial dependencies
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)

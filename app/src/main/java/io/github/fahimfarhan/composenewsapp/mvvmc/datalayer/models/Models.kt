@@ -1,4 +1,4 @@
-package io.github.fahimfarhan.composenewsapp.mvvmc.models
+package io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models
 
 import com.google.gson.Gson
 import okhttp3.ResponseBody

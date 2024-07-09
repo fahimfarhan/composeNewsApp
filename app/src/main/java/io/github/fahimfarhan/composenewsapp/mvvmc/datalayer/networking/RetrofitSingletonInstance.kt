@@ -1,4 +1,4 @@
-package io.github.fahimfarhan.composenewsapp.mvvmc.networking
+package io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.networking
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

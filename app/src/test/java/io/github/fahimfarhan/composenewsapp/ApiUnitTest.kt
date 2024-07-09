@@ -1,6 +1,6 @@
 package io.github.fahimfarhan.composenewsapp
-import io.github.fahimfarhan.composenewsapp.mvvmc.models.getApiError
-import io.github.fahimfarhan.composenewsapp.mvvmc.networking.RetrofitSingletonInstance
+import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.getApiError
+import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.networking.RetrofitSingletonInstance
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
