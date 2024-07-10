@@ -30,7 +30,10 @@ import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.Navigation
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNavGraph
 import java.util.UUID
 
-class SourcesList(mNavController: NavHostController): NewsAppNavGraph {
+class SourcesList(
+  mNavController: NavHostController,
+  private val mainModifier: Modifier
+): NewsAppNavGraph {
   companion object {
     const val TAG = "SOURCES_LIST"
   }
@@ -71,7 +74,7 @@ class SourcesList(mNavController: NavHostController): NewsAppNavGraph {
 
   @Composable
   fun SourcesListView(
-    modifier: Modifier=Modifier,
+    modifier: Modifier=mainModifier,
     mCountry: String = "us"
   ) {
     Log.d(TAG, "SourceListView->mCountry: $mCountry")
@@ -117,13 +120,13 @@ class SourcesList(mNavController: NavHostController): NewsAppNavGraph {
 
   override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
     return {
-      composable(NavigationItem.SourcesList.route) { SourcesListView(modifier=Modifier) }
+      composable(NavigationItem.SourcesList.route) { SourcesListView(modifier=mainModifier) }
       composable(
         route = "${NavigationItem.SourcesList.route}/{country}",
         arguments = listOf(navArgument("country") { type = NavType.StringType } )
       ) { backStackEntry ->
         val mCountry: String = backStackEntry.arguments?.getString("country")?:"us"
-        SourcesListView(modifier=Modifier, mCountry)
+        SourcesListView(modifier=mainModifier, mCountry)
       }
     }
   }

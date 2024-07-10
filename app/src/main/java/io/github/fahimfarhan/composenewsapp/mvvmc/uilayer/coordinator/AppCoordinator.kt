@@ -28,8 +28,8 @@ class AppCoordinator(
     this._mNavController = navHostController
   }*/
 
-  private val mHome by lazy { Home(mNavController) }
-  private val mSourceList by lazy { SourcesList(mNavController) }
+  private val mHome by lazy { Home(mNavController, mainModifier) }
+  private val mSourceList by lazy { SourcesList(mNavController, mainModifier) }
 
   @Composable
   fun NewsNavHost(

@@ -22,7 +22,8 @@ import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNav
 import io.github.fahimfarhan.composenewsapp.ui.theme.ComposeNewsAppTheme
 
 class Home(
-  private val mNavController: NavHostController
+  private val mNavController: NavHostController,
+  private val mainModifier: Modifier
 ): NewsAppNavGraph {
   companion object {
     const val TAG = "HOME"
@@ -83,7 +84,7 @@ class Home(
   }
 
   override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
-    val output: NavGraphBuilder.() -> Unit = { composable(NavigationItem.Home.route) { HomeView(modifier=Modifier) } }
+    val output: NavGraphBuilder.() -> Unit = { composable(NavigationItem.Home.route) { HomeView(modifier=mainModifier) } }
     return output
   }
 }
