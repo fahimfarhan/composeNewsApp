@@ -13,7 +13,8 @@ import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources.SourcesList
 // common navigation related code
 
 class AppCoordinator(
-  private val mNavController: NavHostController
+  private val mNavController: NavHostController,
+  private val mainModifier: Modifier
 ) {
 
   companion object {
@@ -32,20 +33,12 @@ class AppCoordinator(
 
   @Composable
   fun NewsNavHost(
-    modifier: Modifier = Modifier,
-//    navController: NavHostController=this.mNavController,
     startDestination: String=NavigationItem.Home.route
   ) {
-    NavHost(modifier = modifier, navController = mNavController, startDestination = startDestination) {
-      composable(NavigationItem.Home.route) { mHome.HomeView(modifier) }
-      composable(NavigationItem.SourcesList.route) { mSourceList.SourcesListView(modifier) }
-      composable(
-        route = "${NavigationItem.SourcesList.route}/{country}",
-        arguments = listOf(navArgument("country") { type = NavType.StringType } )
-      ) { backStackEntry ->
-        val mCountry: String = backStackEntry.arguments?.getString("country")?:"us"
-        mSourceList.SourcesListView(modifier, mCountry)
-      }
+    NavHost(modifier = mainModifier, navController = mNavController, startDestination = startDestination) {
+//      composable(NavigationItem.Home.route) { mHome.HomeView(modifier) }
+      mHome.createChildNavGraphBuilder().invoke(this)
+      mSourceList.createChildNavGraphBuilder().invoke(this)
     }
   }
 

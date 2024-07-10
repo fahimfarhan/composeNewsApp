@@ -14,13 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NavigationItem
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNavGraph
 import io.github.fahimfarhan.composenewsapp.ui.theme.ComposeNewsAppTheme
 
 class Home(
   private val mNavController: NavHostController
-) {
+): NewsAppNavGraph {
   companion object {
     const val TAG = "HOME"
   }
@@ -77,5 +80,10 @@ class Home(
     ComposeNewsAppTheme {
       HomeView()
     }
+  }
+
+  override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
+    val output: NavGraphBuilder.() -> Unit = { composable(NavigationItem.Home.route) { HomeView(modifier=Modifier) } }
+    return output
   }
 }

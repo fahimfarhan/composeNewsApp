@@ -17,14 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.GenericData
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.Source
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.SourceResponse
 import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.viewmodels.SourcesListViewModel
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NavigationItem
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNavGraph
 import java.util.UUID
 
-class SourcesList(mNavController: NavHostController) {
+class SourcesList(mNavController: NavHostController): NewsAppNavGraph {
   companion object {
     const val TAG = "SOURCES_LIST"
   }
@@ -108,6 +114,19 @@ class SourcesList(mNavController: NavHostController) {
   fun SourcesListPreview() {
     SourcesListView(mCountry = "us")
   }
-  
-  
+
+  override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
+    return {
+      composable(NavigationItem.SourcesList.route) { SourcesListView(modifier=Modifier) }
+      composable(
+        route = "${NavigationItem.SourcesList.route}/{country}",
+        arguments = listOf(navArgument("country") { type = NavType.StringType } )
+      ) { backStackEntry ->
+        val mCountry: String = backStackEntry.arguments?.getString("country")?:"us"
+        SourcesListView(modifier=Modifier, mCountry)
+      }
+    }
+  }
+
+
 }

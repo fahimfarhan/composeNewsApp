@@ -48,11 +48,11 @@ class MainActivity : ComponentActivity() {
   @Composable
   private fun BaseView() {
     val mRememberNavHostController: NavHostController = rememberNavController()
-    _appCoordinator = AppCoordinator(mRememberNavHostController)
 
     ComposeNewsAppTheme {
       Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        appCoordinator.NewsNavHost(modifier = Modifier.padding(innerPadding))
+        _appCoordinator = AppCoordinator(mRememberNavHostController, mainModifier = Modifier.padding(innerPadding))
+        appCoordinator.NewsNavHost()
       }
     }
   }
