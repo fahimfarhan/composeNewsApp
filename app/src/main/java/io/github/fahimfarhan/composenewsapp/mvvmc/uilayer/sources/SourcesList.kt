@@ -3,33 +3,27 @@ package io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.GenericData
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.Source
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.SourceResponse
 import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.viewmodels.SourcesListViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import java.util.UUID
 
-class SourcesList {
+class SourcesList(mNavController: NavHostController) {
   companion object {
     const val TAG = "SOURCES_LIST"
   }
@@ -70,7 +64,7 @@ class SourcesList {
 
   @Composable
   fun SourcesListView(
-    innerPadding: PaddingValues,
+    modifier: Modifier=Modifier,
     mViewModel: SourcesListViewModel = viewModel(modelClass = SourcesListViewModel::class.java)
   ) {
 
@@ -92,7 +86,7 @@ class SourcesList {
 
       is GenericData.Success -> {
         val mSuccess = mGenericData as GenericData.Success<SourceResponse>
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(innerPadding),
+        LazyColumn(modifier = modifier.fillMaxSize(),
            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
           items(
@@ -109,7 +103,7 @@ class SourcesList {
   @Preview
   @Composable
   fun SourcesListPreview() {
-    SourcesListView(PaddingValues(8.dp))
+    SourcesListView()
   }
   
   

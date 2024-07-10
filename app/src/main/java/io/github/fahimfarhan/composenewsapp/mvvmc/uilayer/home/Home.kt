@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,9 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NavigationItem
 import io.github.fahimfarhan.composenewsapp.ui.theme.ComposeNewsAppTheme
 
-class Home {
+class Home(
+  private val mNavController: NavHostController
+) {
   companion object {
     const val TAG = "HOME"
   }
@@ -26,6 +29,7 @@ class Home {
   private fun SourceView() {
     Text(text = "this is for source", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f).padding(16.dp).clickable {
       Log.d(TAG, "user taps on source!")
+      mNavController.navigate(NavigationItem.SourcesList.route)
     })
   }
 
@@ -46,8 +50,8 @@ class Home {
 
 
   @Composable
-  fun HomeView(innerPadding: PaddingValues) {
-    Column(modifier = Modifier.padding(innerPadding).fillMaxSize(), verticalArrangement = Arrangement.Center) {
+  fun HomeView(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
       // src
       Row(horizontalArrangement = Arrangement.Center) {
         SourceView()
@@ -70,7 +74,7 @@ class Home {
   @Preview
   fun HomePreview() {
     ComposeNewsAppTheme {
-      HomeView(innerPadding= PaddingValues(16.dp))
+      HomeView()
     }
   }
 }
