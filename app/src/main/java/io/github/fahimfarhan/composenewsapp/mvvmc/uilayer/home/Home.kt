@@ -37,6 +37,7 @@ class Home(
   private fun TopHeadLinesView() {
     Text(text = "this is for top headlines", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f).padding(16.dp).clickable {
       Log.d(TAG, "user taps on top headlines!")
+      mNavController.navigate(NavigationItem.SourcesList.route+"/gb")
     })
   }
 

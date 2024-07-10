@@ -1,5 +1,6 @@
 package io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -65,8 +66,10 @@ class SourcesList(mNavController: NavHostController) {
   @Composable
   fun SourcesListView(
     modifier: Modifier=Modifier,
-    mViewModel: SourcesListViewModel = viewModel(modelClass = SourcesListViewModel::class.java)
+    mCountry: String = "us"
   ) {
+    Log.d(TAG, "SourceListView->mCountry: $mCountry")
+    val mViewModel: SourcesListViewModel = viewModel(factory = SourcesListViewModel.Factory(mCountry))
 
     val mGenericData by mViewModel.genericDataFlow.collectAsState(initial = GenericData.Normal())
 
@@ -103,7 +106,7 @@ class SourcesList(mNavController: NavHostController) {
   @Preview
   @Composable
   fun SourcesListPreview() {
-    SourcesListView()
+    SourcesListView(mCountry = "us")
   }
   
   
