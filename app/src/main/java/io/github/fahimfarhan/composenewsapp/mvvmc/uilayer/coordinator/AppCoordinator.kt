@@ -7,6 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything.BasicEveryThingScreen
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything.EverythingScreen
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.home.Home
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources.SourcesList
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.topheadlines.TopHeadLinesScreen
@@ -32,6 +34,9 @@ class AppCoordinator(
   private val mHome by lazy { Home(mNavController, mainModifier) }
   private val mSourceList by lazy { SourcesList(mNavController, mainModifier) }
   private val mTopHeadLinesScreen by lazy { TopHeadLinesScreen(mNavController, mainModifier) }
+  private val mBasicEveryThingScreen = BasicEveryThingScreen(mNavController, mainModifier)
+
+  private val listOfNewsAppNavGraphs: List<NewsAppNavGraph> by lazy { arrayListOf(mTopHeadLinesScreen, mBasicEveryThingScreen) }
 
   @Composable
   fun NewsNavHost(
@@ -41,7 +46,11 @@ class AppCoordinator(
 //      composable(NavigationItem.Home.route) { mHome.HomeView(mainModifier) }
       mHome.createChildNavGraphBuilder().invoke(this)
       mSourceList.createChildNavGraphBuilder().invoke(this)
-      mTopHeadLinesScreen.createChildNavGraphBuilder().invoke(this)
+
+      for(newsAppNavGraph in listOfNewsAppNavGraphs) {
+        newsAppNavGraph.createChildNavGraphBuilder().invoke(this)
+      }
+
     }
   }
 }

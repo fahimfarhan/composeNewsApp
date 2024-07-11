@@ -24,7 +24,7 @@ interface NewsApiService {
     @Query(value = "to") to: String?=null, // "2020-01-01", // yyyy-mm-dd
     @Query(value = "language") language: String="en", //
     @Query(value = "sortBy") sortBy: String="publishedAt", // relevancy, popularity, publishedAt
-    @Query(value = "pageSize") pageSize: Int=100,
+    @Query(value = "pageSize") pageSize: Int=50,
     @Query(value = "page") page: Int=1
   ): Response<NewsResponse>
 

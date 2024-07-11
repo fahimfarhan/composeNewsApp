@@ -66,11 +66,12 @@ class Home(
 
   @Composable
   private fun ArticlesListView() {
-    Text(text = "this is for news list",textAlign = TextAlign.Center, modifier = Modifier
+    Text(text = "this is for everything news list",textAlign = TextAlign.Center, modifier = Modifier
       .fillMaxWidth(1f)
       .padding(16.dp)
       .clickable {
         Log.d(TAG, "user taps articles list view!")
+        mNavController.navigate(NavigationItem.BasicEveryThing.route)
       })
   }
 
