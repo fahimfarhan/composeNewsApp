@@ -1,6 +1,7 @@
 package io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.Article
 import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.viewmodels.EverythingViewModel
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NavigationItem
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNavGraph
+import io.github.fahimfarhan.composenewsapp.mvvmc.utils.Extensions.sharedViewModel
 import io.github.fahimfarhan.composenewsapp.ui.theme.Pink40
 
 open class BasicEveryThingScreen(
@@ -42,20 +44,24 @@ open class BasicEveryThingScreen(
   // override methods / public apis
   override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
     return {
-      composable(NavigationItem.BasicEveryThing.route) { EverythingView() }
+      composable(NavigationItem.BasicEveryThing.route) { entry ->
+        val viewModel: EverythingViewModel = viewModel() // entry.sharedViewModel<EverythingViewModel>(mNavController)
+        EverythingView(viewModel)
+      }
     }
   }
 
   @Composable
-  override fun EverythingView() {
-    val vm: EverythingViewModel = viewModel()
-    val lazyPagingArticles: LazyPagingItems<Article> = vm.flowOfPagingDataArticle.collectAsLazyPagingItems()
+  override fun EverythingView(
+    sharedViewModel: EverythingViewModel
+  ) {
+    val lazyPagingArticles: LazyPagingItems<Article> = sharedViewModel.flowOfPagingDataArticle.collectAsLazyPagingItems()
 
-    MainScreen(lazyPagingArticles = lazyPagingArticles, modifier = mainModifier)
+    MainScreen(lazyPagingArticles = lazyPagingArticles, modifier = mainModifier, sharedViewModel)
   }
 
   @Composable
-  private fun MainScreen(lazyPagingArticles: LazyPagingItems<Article>, modifier: Modifier) {
+  private fun MainScreen(lazyPagingArticles: LazyPagingItems<Article>, modifier: Modifier, sharedViewModel: EverythingViewModel) {
     when(lazyPagingArticles.loadState.refresh) {
       is LoadState.Error -> {
         ErrorScreen(loadStateError = lazyPagingArticles.loadState.refresh as LoadState.Error)
@@ -65,6 +71,8 @@ open class BasicEveryThingScreen(
       }
       is LoadState.NotLoading -> {
         PagedRecyclerView(lazyPagingArticles, modifier)
+        sharedViewModel.setSnapShot(lazyPagingArticles.itemSnapshotList.items)
+
       }
     }
   }
@@ -102,7 +110,7 @@ open class BasicEveryThingScreen(
       ) { idx: Int ->
         val item = lazyPagingArticles[idx]
         if(item!=null) {
-          EverythingRow(article = item)
+          EverythingRow(idx = idx, article = item)
         } else {
           NullArticleRow()
         }
@@ -111,8 +119,10 @@ open class BasicEveryThingScreen(
   }
 
   @Composable
-  private fun EverythingRow(article: Article) {
-    Row {
+  private fun EverythingRow(idx: Int, article: Article) {
+    Row(modifier = Modifier.clickable {
+      mNavController.navigate(NavigationItem.SingleArticleWithArgs.route + "/${idx}")
+    }) {
       Column {
         Text(text = "${article.title}")
         Text(text = "Author ${article.author}")

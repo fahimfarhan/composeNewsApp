@@ -2,6 +2,7 @@ package io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything
 
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -33,6 +35,7 @@ import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.Article
 import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.viewmodels.EverythingViewModel
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NavigationItem
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.coordinator.NewsAppNavGraph
+import io.github.fahimfarhan.composenewsapp.mvvmc.utils.Extensions.sharedViewModel
 import io.github.fahimfarhan.composenewsapp.mvvmc.utils.Extensions.signature
 import io.github.fahimfarhan.composenewsapp.ui.theme.Pink40
 
@@ -53,12 +56,16 @@ open class GlideEveryThingScreen(
   // override methods / public apis
   override fun createChildNavGraphBuilder(): NavGraphBuilder.() -> Unit {
     return {
-      composable(NavigationItem.GlideEveryThing.route) { EverythingView() }
+      composable(NavigationItem.GlideEveryThing.route) { entry ->
+        val viewModel: EverythingViewModel = viewModel() // entry.sharedViewModel<EverythingViewModel>(mNavController)
+        EverythingView(viewModel) }
     }
   }
 
   @Composable
-  override fun EverythingView() {
+  override fun EverythingView(
+    sharedViewModel: EverythingViewModel
+  ) {
     val vm: EverythingViewModel = viewModel()
     val lazyPagingArticles: LazyPagingItems<Article> = vm.flowOfPagingDataArticle.collectAsLazyPagingItems()
 
@@ -136,7 +143,9 @@ open class GlideEveryThingScreen(
   @OptIn(ExperimentalGlideComposeApi::class)
   @Composable
   private fun EverythingRow(idx: Int, article: Article, preloadingData: GlidePreloadingData<Article>) {
-    Row {
+    Row(modifier = Modifier.clickable {
+      mNavController.navigate(NavigationItem.SingleArticleWithArgs.route + "/${idx}")
+    }) {
       Column {
         Text(text = "${article.title}")
         Text(text = "Author ${article.author}")

@@ -6,7 +6,8 @@ enum class Screen {
   SOURCES_LIST,
   TOP_HEADLINES,
   BASIC_EVERYTHING,
-  GLIDE_EVERYTHING
+  GLIDE_EVERYTHING,
+  SINGLE_ARTICLE_WITH_ARGS
 }
 
 sealed class NavigationItem(val route: String) {
@@ -15,4 +16,5 @@ sealed class NavigationItem(val route: String) {
   data object TopHeadLines: NavigationItem(Screen.TOP_HEADLINES.name)
   data object BasicEveryThing: NavigationItem(Screen.BASIC_EVERYTHING.name)
   data object GlideEveryThing: NavigationItem(Screen.GLIDE_EVERYTHING.name)
+  data object SingleArticleWithArgs: NavigationItem(Screen.SINGLE_ARTICLE_WITH_ARGS.name)
 }
