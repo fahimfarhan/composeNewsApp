@@ -75,6 +75,17 @@ class Home(
       })
   }
 
+  @Composable
+  private fun GlideArticlesListView() {
+    Text(text = "this is for glide everything news list",textAlign = TextAlign.Center, modifier = Modifier
+      .fillMaxWidth(1f)
+      .padding(16.dp)
+      .clickable {
+        Log.d(TAG, "user taps articles list view!")
+        mNavController.navigate(NavigationItem.GlideEveryThing.route)
+      })
+  }
+
 
 
   @Composable
@@ -97,6 +108,10 @@ class Home(
       // articles
       Row(horizontalArrangement = Arrangement.Center) {
         ArticlesListView()
+      }
+
+      Row(horizontalArrangement = Arrangement.Center) {
+        GlideArticlesListView()
       }
     }
   }

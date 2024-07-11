@@ -5,7 +5,8 @@ enum class Screen {
   HOME,
   SOURCES_LIST,
   TOP_HEADLINES,
-  BASIC_EVERYTHING
+  BASIC_EVERYTHING,
+  GLIDE_EVERYTHING
 }
 
 sealed class NavigationItem(val route: String) {
@@ -13,5 +14,5 @@ sealed class NavigationItem(val route: String) {
   data object SourcesList: NavigationItem(Screen.SOURCES_LIST.name)
   data object TopHeadLines: NavigationItem(Screen.TOP_HEADLINES.name)
   data object BasicEveryThing: NavigationItem(Screen.BASIC_EVERYTHING.name)
-
+  data object GlideEveryThing: NavigationItem(Screen.GLIDE_EVERYTHING.name)
 }

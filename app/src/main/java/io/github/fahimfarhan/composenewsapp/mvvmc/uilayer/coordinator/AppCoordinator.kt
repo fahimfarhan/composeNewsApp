@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything.BasicEveryThingScreen
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything.EverythingScreen
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.everything.GlideEveryThingScreen
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.home.Home
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources.SourcesList
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.topheadlines.TopHeadLinesScreen
@@ -35,8 +36,11 @@ class AppCoordinator(
   private val mSourceList by lazy { SourcesList(mNavController, mainModifier) }
   private val mTopHeadLinesScreen by lazy { TopHeadLinesScreen(mNavController, mainModifier) }
   private val mBasicEveryThingScreen = BasicEveryThingScreen(mNavController, mainModifier)
+  private val mGlideEveryThingScreen = GlideEveryThingScreen(mNavController, mainModifier)
 
-  private val listOfNewsAppNavGraphs: List<NewsAppNavGraph> by lazy { arrayListOf(mTopHeadLinesScreen, mBasicEveryThingScreen) }
+  private val listOfNewsAppNavGraphs: List<NewsAppNavGraph> by lazy {
+    arrayListOf(mTopHeadLinesScreen, mBasicEveryThingScreen, mGlideEveryThingScreen)
+  }
 
   @Composable
   fun NewsNavHost(
