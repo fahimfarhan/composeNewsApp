@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.home.Home
 import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.sources.SourcesList
+import io.github.fahimfarhan.composenewsapp.mvvmc.uilayer.topheadlines.TopHeadLinesScreen
 
 // common navigation related code
 
@@ -30,17 +31,18 @@ class AppCoordinator(
 
   private val mHome by lazy { Home(mNavController, mainModifier) }
   private val mSourceList by lazy { SourcesList(mNavController, mainModifier) }
+  private val mTopHeadLinesScreen by lazy { TopHeadLinesScreen(mNavController, mainModifier) }
 
   @Composable
   fun NewsNavHost(
     startDestination: String=NavigationItem.Home.route
   ) {
     NavHost(modifier = mainModifier, navController = mNavController, startDestination = startDestination) {
-//      composable(NavigationItem.Home.route) { mHome.HomeView(modifier) }
+//      composable(NavigationItem.Home.route) { mHome.HomeView(mainModifier) }
       mHome.createChildNavGraphBuilder().invoke(this)
       mSourceList.createChildNavGraphBuilder().invoke(this)
+      mTopHeadLinesScreen.createChildNavGraphBuilder().invoke(this)
     }
   }
-
 }
 

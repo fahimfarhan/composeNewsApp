@@ -31,25 +31,47 @@ class Home(
 
   @Composable
   private fun SourceView() {
-    Text(text = "this is for source", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f).padding(16.dp).clickable {
-      Log.d(TAG, "user taps on source!")
-      mNavController.navigate(NavigationItem.SourcesList.route)
-    })
+    Text(text = "Tap to load us news sources", textAlign = TextAlign.Center, modifier = Modifier
+      .fillMaxWidth(1f)
+      .padding(16.dp)
+      .clickable {
+        Log.d(TAG, "user taps on source!")
+        mNavController.navigate(NavigationItem.SourcesList.route + "/us")
+      })
+
+
+  }
+
+  @Composable
+  private fun SourceUkView() {
+    Text(text = "Tap to load uk news sources", textAlign = TextAlign.Center, modifier = Modifier
+      .fillMaxWidth(1f)
+      .padding(16.dp)
+      .clickable {
+        Log.d(TAG, "user taps on source gb!")
+        mNavController.navigate(NavigationItem.SourcesList.route + "/gb")
+      })
   }
 
   @Composable
   private fun TopHeadLinesView() {
-    Text(text = "this is for top headlines", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f).padding(16.dp).clickable {
-      Log.d(TAG, "user taps on top headlines!")
-      mNavController.navigate(NavigationItem.SourcesList.route+"/gb")
-    })
+    Text(text = "this is for top headlines", textAlign = TextAlign.Center, modifier = Modifier
+      .fillMaxWidth(1f)
+      .padding(16.dp)
+      .clickable {
+        Log.d(TAG, "user taps on top headlines!")
+        mNavController.navigate(NavigationItem.TopHeadLines.route)
+      })
   }
 
   @Composable
   private fun ArticlesListView() {
-    Text(text = "this is for news list",textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f).padding(16.dp).clickable {
-      Log.d(TAG, "user taps articles list view!")
-    })
+    Text(text = "this is for news list",textAlign = TextAlign.Center, modifier = Modifier
+      .fillMaxWidth(1f)
+      .padding(16.dp)
+      .clickable {
+        Log.d(TAG, "user taps articles list view!")
+      })
   }
 
 
@@ -60,6 +82,10 @@ class Home(
       // src
       Row(horizontalArrangement = Arrangement.Center) {
         SourceView()
+      }
+
+      Row(horizontalArrangement = Arrangement.Center) {
+        SourceUkView()
       }
 
       // headlines

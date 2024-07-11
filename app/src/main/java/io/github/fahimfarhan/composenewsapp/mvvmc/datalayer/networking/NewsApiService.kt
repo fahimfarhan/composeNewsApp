@@ -3,6 +3,8 @@ package io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.networking
 import io.github.fahimfarhan.composenewsapp.BuildConfig
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.NewsResponse
 import io.github.fahimfarhan.composenewsapp.mvvmc.datalayer.models.SourceResponse
+import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.pagingsources.TopHeadersPagingSource
+import io.github.fahimfarhan.composenewsapp.mvvmc.domainlayer.repositories.TopHeadLinesRepository
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -32,8 +34,8 @@ interface NewsApiService {
     @Query(value = "country") country: String?=null,
     @Query(value = "category") category: String?=null,
     @Query(value = "sources") sources: String?=null,
-    @Query(value = "q") q: String?=null,
-    @Query(value = "pageSize") pageSize: Int=20,
+    @Query(value = "q") q: String?="news",
+    @Query(value = "pageSize") pageSize: Int=TopHeadersPagingSource.TOP_HEAD_LINES_PAGE_SIZE,
     @Query(value = "page") page: Int=1
   ): Response<NewsResponse>
 
