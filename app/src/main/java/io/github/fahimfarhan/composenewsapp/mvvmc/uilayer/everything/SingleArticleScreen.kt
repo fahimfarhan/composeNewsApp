@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -63,8 +65,11 @@ class SingleArticleScreen(
       composable(
         route = "${NavigationItem.SingleArticleWithArgs.route}/{articleIdx}",
         arguments = listOf(navArgument("articleIdx") { type = NavType.IntType } )
-      ) { backStackEntry ->
-        val sharedViewModel: EverythingViewModel = viewModel(mNavController.previousBackStackEntry!!) // backStackEntry.sharedViewModel<EverythingViewModel>(mNavController)
+      ) { backStackEntry: NavBackStackEntry ->
+        val targetBackStackEntry: NavBackStackEntry = remember(key1 = mNavController.currentBackStackEntry) {
+          mNavController.getBackStackEntry(NavigationItem.BasicEveryThing.route)
+        }
+        val sharedViewModel: EverythingViewModel = viewModel(targetBackStackEntry) // viewModel(mNavController.previousBackStackEntry!!) // backStackEntry.sharedViewModel<EverythingViewModel>(mNavController)
 
         val articleIdx: Int = backStackEntry.arguments?.getInt("articleIdx", -1)?:-1
         SingleArticleView(
